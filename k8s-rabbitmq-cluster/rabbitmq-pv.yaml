@@ -12,9 +12,9 @@ spec:
   storageClassName: "rmq-storage-class"
   nfs:
     # real share directory
-    path: /k8s/rmq-cluster/rabbitmq-cluster-1
+    path: /nfs/rmp-cluster/rmp-cluster01
     # nfs real ip
-    server: 192.168.2.2
+    server: k8s-node01
 
 ---
 apiVersion: v1
@@ -31,9 +31,9 @@ spec:
   storageClassName: "rmq-storage-class"
   nfs:
     # real share directory
-    path: /k8s/rmq-cluster/rabbitmq-cluster-2
+    path: /nfs/rmp-cluster/rmp-cluster02
     # nfs real ip
-    server: 192.168.2.2
+    server: k8s-node01
 
 ---
 
@@ -51,6 +51,6 @@ spec:
   storageClassName: "rmq-storage-class"
   nfs:
     # real share directory
-    path: /k8s/rmq-cluster/rabbitmq-cluster-3
+    path: /nfs/rmp-cluster/rmp-cluster03
     # nfs real ip
-    server: 192.168.2.2
+    server: k8s-node01
