@@ -14,12 +14,12 @@
 
     ````
         NFS服务器：
-        /k8s/redis-cluster/1 *(rw,sync,no_subtree_check,no_root_squash)
-        /k8s/redis-cluster/2 *(rw,sync,no_subtree_check,no_root_squash)
-        /k8s/redis-cluster/3 *(rw,sync,no_subtree_check,no_root_squash)
-        /k8s/redis-cluster/4 *(rw,sync,no_subtree_check,no_root_squash)
-        /k8s/redis-cluster/5 *(rw,sync,no_subtree_check,no_root_squash)
-        /k8s/redis-cluster/6 *(rw,sync,no_subtree_check,no_root_squash)
+        /nfs/redis-cluster/redis-cluster01 *(rw,sync,no_subtree_check,no_root_squash)
+        /nfs/redis-cluster/redis-cluster02 *(rw,sync,no_subtree_check,no_root_squash)
+        /nfs/redis-cluster/redis-cluster03 *(rw,sync,no_subtree_check,no_root_squash)
+        /nfs/redis-cluster/redis-cluster04 *(rw,sync,no_subtree_check,no_root_squash)
+        /nfs/redis-cluster/redis-cluster05 *(rw,sync,no_subtree_check,no_root_squash)
+        /nfs/redis-cluster/redis-cluster06 *(rw,sync,no_subtree_check,no_root_squash)
     ````
     
 3. 创建集群
