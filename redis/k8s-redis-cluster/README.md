@@ -46,7 +46,8 @@
 5. 查看状态
 
     ````
-        [root@k8s-master01 ~]# kubectl exec -ti redis-cluster-ss-0 -n public-service -- redis-cli cluster nodesf9527e2ced3c472caabe3f815d87531e82e75049 172.168.5.174:6379@16379 master - 0 1541693210490 2 connected 5461-10922
+        [root@k8s-master01 ~]# kubectl exec -ti redis-cluster-ss-0 -n public-service -- redis-cli cluster nodes
+	f9527e2ced3c472caabe3f815d87531e82e75049 172.168.5.174:6379@16379 master - 0 1541693210490 2 connected 5461-10922
         a47ef989862a2ddbf83c70d8191ff17c8b37a6fc 172.168.2.68:6379@16379 master - 0 1541693213497 3 connected 10923-16383
         b4c3d1ffe5ed70d2d40467d228004f4e0fb5fa25 172.168.5.175:6379@16379 slave f9527e2ced3c472caabe3f815d87531e82e75049 0 1541693216510 6 connected
         2aa4d2e5de3aca325bff95325102da72334a5164 172.168.1.76:6379@16379 master - 0 1541693214503 7 connected 0-5460
