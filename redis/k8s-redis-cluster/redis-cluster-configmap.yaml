@@ -15,3 +15,5 @@ data:
       cluster-node-timeout 15000
       # #  集群内部配置文件
       cluster-config-file "nodes.conf"
+      # 密码
+      # requirepass 123456

@@ -22,7 +22,8 @@ spec:
         - cp /mnt/redis-cluster.conf /data ; redis-server /data/redis-cluster.conf
         command:
         - sh
-        image: dotbalo/redis-trib:4.0.10
+        #image: dotbalo/redis-trib:4.0.10
+        image: redis-cluster:0.2
         imagePullPolicy: IfNotPresent
         name: redis-cluster
         ports:
