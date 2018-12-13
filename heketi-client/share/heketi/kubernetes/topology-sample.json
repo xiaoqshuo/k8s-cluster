@@ -1,0 +1,152 @@
+ters": [
+    {
+      "nodes": [
+        {
+          "node": {
+            "hostnames": {
+              "manage": [
+                "k8s-master01"
+              ],
+              "storage": [
+                "192.168.2.100"
+              ]
+            },
+            "zone": 1
+          },
+          "devices": [
+            {
+              "name": "/dev/sdb",
+              "destroydata": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "hostnames": {
+              "manage": [
+                "k8s-node01"
+              ],
+              "storage": [
+                "192.168.2.101"
+              ]
+            },
+            "zone": 1
+          },
+          "devices": [
+            {
+              "name": "/dev/sdc",
+              "destroydata": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "hostnames": {
+              "manage": [
+                "k8s-node02"
+              ],
+              "storage": [
+                "192.168.2.102"
+              ]
+            },
+            "zone": 1
+          },
+          "devices": [
+            {
+              "name": "/dev/sdb",
+              "destroydata": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+  "clusters": [
+    {
+      "nodes": [
+        {
+          "node": {
+            "hostnames": {
+              "manage": [
+                "node0"
+              ],
+              "storage": [
+                "192.168.10.100"
+              ]
+            },
+            "zone": 1
+          },
+          "devices": [
+            {
+              "name": "/dev/vdb",
+              "destroydata": false
+            },
+            {
+              "name": "/dev/vdc",
+              "destroydata": false
+            },
+            {
+              "name": "/dev/vdd",
+              "destroydata": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "hostnames": {
+              "manage": [
+                "node1"
+              ],
+              "storage": [
+                "192.168.10.101"
+              ]
+            },
+            "zone": 1
+          },
+          "devices": [
+            {
+              "name": "/dev/vdb",
+              "destroydata": false
+            },
+            {
+              "name": "/dev/vdc",
+              "destroydata": false
+            },
+            {
+              "name": "/dev/vdd",
+              "destroydata": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "hostnames": {
+              "manage": [
+                "node2"
+              ],
+              "storage": [
+                "192.168.10.102"
+              ]
+            },
+            "zone": 1
+          },
+          "devices": [
+            {
+              "name": "/dev/vdb",
+              "destroydata": false
+            },
+            {
+              "name": "/dev/vdc",
+              "destroydata": false
+            },
+            {
+              "name": "/dev/vdd",
+              "destroydata": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

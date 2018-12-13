@@ -23,7 +23,8 @@ spec:
         command:
         - sh
         #image: dotbalo/redis-trib:4.0.10
-        image: redis-cluster:0.2
+        #image: redis-trib:0.8
+        image: redis-c:0.12
         imagePullPolicy: IfNotPresent
         name: redis-cluster
         ports:
