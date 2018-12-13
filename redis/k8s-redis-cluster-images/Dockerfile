@@ -54,7 +54,6 @@ RUN set -ex; \
     	apk del .build-deps ; \
 	gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/ ;\ 
 	chmod +x /redis-plus.sh ;\
-        chmod +x /redis-trib.rb ;\
         chmod +x /usr/local/bin/redis-trib.rb ;\
         /bin/bash /redis-plus.sh
 
