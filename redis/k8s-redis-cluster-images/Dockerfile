@@ -73,3 +73,7 @@ WORKDIR /data
 
 CMD ["redis-server", "/data/redis-cluster.conf"]
 
+# 未测试
+# 如果配置了redis 密码 "requirepass 123456"
+# 创建slot "./redis-trib.rb create --replicas 1 ..." 报错： [ERR] Sorry, can't connect to node
+# 修改 grep ':password =>' /usr/lib/ruby/gems/2.4.0/gems/redis-4.0.1/lib/redis/client.rb 为对应的密码
