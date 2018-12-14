@@ -1,0 +1,51 @@
+apiVersion: extensions/v1beta1 
+kind: Deployment 
+metadata: 
+  name: nginx-gfs
+spec: 
+  replicas: 2
+  template: 
+    metadata: 
+      labels: 
+        name: nginx 
+    spec: 
+      containers: 
+        - name: nginx 
+          image: nginx 
+          imagePullPolicy: IfNotPresent
+          ports: 
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx-gfs-html
+              mountPath: "/usr/share/nginx/html"
+            - name: nginx-gfs-conf
+              mountPath: "/etc/nginx/conf.d"
+      volumes:
+      - name: nginx-gfs-html
+        persistentVolumeClaim:
+          claimName: glusterfs-nginx-html
+      - name: nginx-gfs-conf
+        persistentVolumeClaim:
+          claimName: glusterfs-nginx-conf
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: glusterfs-nginx-html
+spec:
+  accessModes: [ "ReadWriteMany" ]
+  storageClassName: "gluster-heketi"
+  resources:
+    requests:
+      storage: 500Mi
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: glusterfs-nginx-conf
+spec:
+  accessModes: [ "ReadWriteMany" ]
+  storageClassName: "gluster-heketi"
+  resources:
+    requests:
+      storage: 10Mi
