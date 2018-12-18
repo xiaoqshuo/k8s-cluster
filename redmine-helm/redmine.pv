@@ -12,7 +12,7 @@ spec:
   storageClassName: "redmine-data"
   nfs:
     # real share directory
-    path: /k8s/redmine
+    path: /nfs/redmine-helm
     # nfs real ip
-    server: 192.168.2.2
+    server: 192.168.2.101
 
