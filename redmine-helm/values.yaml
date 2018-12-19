@@ -51,8 +51,9 @@ smtpHost: smtp.xxx.com
 smtpPort: 25
 smtpUser: user@xxx.com
 smtpPassword: password
-smtpTls: True
-serviceType: ClusterIP
+smtpTls: false
+# smtpTls: True
+# serviceType: ClusterIP
 
 ## Environment variables, to pass to the entry point
 ##

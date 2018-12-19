@@ -8,13 +8,13 @@ persistence:
 # Usually, if ingress is enabled, the domain should be the value of
 # ingress.hosts.core .
 # If Harbor is deployed behind the proxy, set it as the URL of proxy
-externalURL: https://harbor.xxx.net
+externalURL: https://harbor.k8s.net
 
 ingress:
   enabled: true
   hosts:
-    core: harbor.xxx.net
-    notary: notary.xxx.net
+    core: harbor.k8s.net
+    notary: notary.k8s.net
   annotations:
     ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
@@ -89,7 +89,7 @@ database:
       data:
         storageClass: "gluster-heketi"
         accessMode: ReadWriteOnce
-        size: 1Gi
+        size: 10Gi
     # resources:
     #  requests:
     #    memory: 256Mi
@@ -242,7 +242,7 @@ redis:
       enabled: *persistence_enabled
       storageClass: "gluster-heketi"
       accessMode: ReadWriteOnce
-      size: 1Gi
+      size: 10Gi
   persistence:
     # existingClaim:
     storageClass: "gluster-heketi"
