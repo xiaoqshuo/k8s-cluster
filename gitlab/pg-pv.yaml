@@ -12,7 +12,7 @@ spec:
   storageClassName: "gitlab-pg-data"
   nfs:
     # real share directory
-    path: /k8s/gitlab-pg
+    path: /nfs/gitlab-pg
     # nfs real ip
-    server: 192.168.2.2
+    server: 192.168.2.101
 

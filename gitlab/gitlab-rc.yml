@@ -35,7 +35,7 @@ spec:
           value: dukuan@haixiangjinfu.com
 
         - name: GITLAB_HOST
-          value: gitlab.xxx.net
+          value: gitlab.k8s.net
         - name: GITLAB_PORT
           value: "80"
         - name: GITLAB_SSH_PORT
