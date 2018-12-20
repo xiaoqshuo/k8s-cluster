@@ -37,7 +37,7 @@ redmineUsername: user
 ## Admin email
 ## ref: https://github.com/bitnami/bitnami-docker-redmine/#environment-variables
 ##
-redmineEmail: username@xxx.com
+redmineEmail: name@email.com
 
 ## Redmine default data language
 ## ref: https://github.com/bitnami/bitnami-docker-redmine/#environment-variables
@@ -47,13 +47,11 @@ redmineLanguage: en
 ## SMTP mail delivery configuration
 ## ref: https://github.com/bitnami/bitnami-docker-redmine/#smtp-configuration
 ##
-smtpHost: smtp.xxx.com
+smtpHost: smtp.exmail.qq.com
 smtpPort: 25
-smtpUser: user@xxx.com
+smtpUser: name@email.com
 smtpPassword: password
 smtpTls: false
-# smtpTls: True
-# serviceType: ClusterIP
 
 ## Environment variables, to pass to the entry point
 ##
