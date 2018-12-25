@@ -85,6 +85,8 @@ spec:
           args: [ "--argumentsRealm.passwd.$(ADMIN_USER)=$(ADMIN_PASSWORD)",  "--argumentsRealm.roles.$(ADMIN_USER)=admin"]
           {{- end }}
           env:
+            - name: TZ
+              value: Asia/Shanghai
             - name: JAVA_OPTS
               value: "{{ default "" .Values.Master.JavaOpts}}"
             - name: JENKINS_OPTS

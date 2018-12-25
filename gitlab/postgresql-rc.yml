@@ -53,6 +53,7 @@ spec:
           timeoutSeconds: 1
       volumes:
       - name: data
+#        emptyDir: {}
         persistentVolumeClaim:
           claimName: gitlab-pg
 ---
@@ -66,4 +67,4 @@ spec:
   storageClassName: "gitlab-pg-data"
   resources:
     requests:
-      storage: 5Gi
+      storage: 10Gi

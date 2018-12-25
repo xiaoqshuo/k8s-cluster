@@ -32,10 +32,10 @@ spec:
         - name: GITLAB_ROOT_PASSWORD
           value: gitlab123
         - name: GITLAB_ROOT_EMAIL
-          value: dukuan@haixiangjinfu.com
+          value: guowei@haixiangjinfu.com
 
         - name: GITLAB_HOST
-          value: gitlab.k8s.net
+          value: gitlab.xxx.net
         - name: GITLAB_PORT
           value: "80"
         - name: GITLAB_SSH_PORT
@@ -78,9 +78,9 @@ spec:
         - name: SMTP_PORT
           value: "465"
         - name: SMTP_USER
-          value: dukuan@xxx.com
+          value: guowei@haixiangjinfu.com
         - name: SMTP_PASS
-          value: "DKxxx"
+          value: "HX@gw123"
         - name: SMTP_STARTTLS
           value: "true"
         - name: SMTP_AUTHENTICATION
