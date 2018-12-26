@@ -4,7 +4,7 @@ metadata:
   name: gitlab-pg-data
 spec:
   capacity:
-    storage: 15Gi
+    storage: 5Gi
   accessModes:
     - ReadWriteMany
   volumeMode: Filesystem
