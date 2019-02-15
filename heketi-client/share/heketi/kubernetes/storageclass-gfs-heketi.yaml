@@ -6,3 +6,5 @@ provisioner: kubernetes.io/glusterfs
 parameters:
   resturl: "http://10.96.115.101:8080"
   restauthenabled: "false"
+allowVolumeExpansion: true
+# 开启在线扩容pvc
