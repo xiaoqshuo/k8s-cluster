@@ -1,9 +1,9 @@
-FROM 49.4.114.57:1181/basic/centos:7.6.1810-tools
+FROM centos:7.6
 
-MAINTAINER guowei
+MAINTAINER xiaoqshuo
 
 COPY ./redis/bin/* /redis-data/bin/
-COPY ./redis-master.conf /redis-data/conf/redis.conf
+COPY ./redis.conf /redis-data/conf/redis.conf
 COPY ./run.sh /redis-data/conf/run.sh
 
 RUN mkdir -p /redis-data/{data,conf} && \
