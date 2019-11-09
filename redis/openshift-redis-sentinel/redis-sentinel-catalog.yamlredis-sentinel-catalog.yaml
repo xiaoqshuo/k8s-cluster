@@ -1,0 +1,252 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  component: redis-sentinel-catalog
+  template: redis-sentinel-catalog
+metadata:
+  annotations:
+    description: Create a master+slave+sentinel redis cluster
+    openshift.io/display-name: redis-sentinel-catalog
+    tags: cache,redis-sentinel-catalog
+  name: redis-sentinel-catalog
+objects:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+    name: ${NAME}
+    labels:
+      name: ${NAME}
+      template: redis-sentinel-catalog
+      component: redis-sentinel-catalog
+  spec:
+    clusterIP: None
+    ports:
+      - port: ${REDIS_PORT}
+    selector:
+      ${NAME}: "true"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+    name: ${NAME}-stl
+    labels:
+      name: ${NAME}-stl
+      template: redis-sentinel-catalog
+      component: redis-sentinel-catalog
+  spec:
+    ports:
+      - port: ${SENTINEL_PORT}
+    selector:
+      ${NAME}-stl: "true"
+- apiVersion: apps/v1beta1
+  kind: StatefulSet
+  metadata:
+    name: ${NAME}
+    labels:
+      name: ${NAME}
+  spec:
+    podManagementPolicy: Parallel
+    serviceName: ${NAME}
+    replicas: ${REDIS_REPLICAS}
+    template:
+      metadata:
+        labels:
+          ${NAME}: "true"
+          template: redis-sentinel-catalog
+          component: redis-sentinel-catalog
+      spec:
+        terminationGracePeriodSeconds: 10
+        hostNetwork: true
+        nodeSelector:
+          node-role.kubernetes.io/zone: ${ZONE}
+        securityContext:
+          runAsUser: 100
+        containers:
+        - name: ${NAME}
+          image: ${SOURCE_IMAGE}
+          imagePullPolicy: Always
+          ports:
+          - containerPort: ${REDIS_PORT}
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - /redis-data/bin/redis-cli
+              - -a
+              - ${REDIS_PASS}
+              - -p
+              - ${REDIS_PORT}
+              - INFO
+            failureThreshold: 12
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          env:
+          - name: NAME
+            value: "${NAME}"
+          - name: REDIS_PASS
+            value: "${REDIS_PASS}"
+          - name: REDIS_PORT
+            value: "${REDIS_PORT}"
+          - name: MY_MEM_LIMIT
+            valueFrom:
+              resourceFieldRef:
+                containerName: ${NAME}
+                resource: limits.memory
+          - name: NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          resources:
+            limits:
+              cpu: ${R_RESOURCE_CPU_LIMIT}
+              memory: ${R_RESOURCE_MEMORY_LIMIT}
+            requests:
+              cpu: ${R_RESOURCE_CPU_REQ}
+              memory: ${R_RESOURCE_MEMORY_REQ}
+          volumeMounts:
+          - name: ${NAME}-volume
+            mountPath: /redis-data/data
+    volumeClaimTemplates:
+    - metadata:
+        name: ${NAME}-volume
+        annotations:
+          volume.beta.kubernetes.io/storage-class: ${ZONE}-glusterfs-storage
+          volume.beta.kubernetes.io/storage-provisioner: kubernetes.io/glusterfs
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: ${VOLUME_REDIS_CAPACITY}
+- apiVersion: apps/v1beta1
+  kind: StatefulSet
+  metadata:
+    name: ${NAME}-stl
+  spec:
+    podManagementPolicy: Parallel
+    serviceName: ${NAME}-stl
+    replicas: ${REDIS_SETNINEL_REPLICAS}
+    template:
+      metadata:
+        labels:
+          ${NAME}-stl: "true"
+          template: redis-stl-catalog
+          component: redis-stl-catalog
+      spec:
+        terminationGracePeriodSeconds: 10
+        nodeSelector:
+          node-role.kubernetes.io/zone: ${ZONE}
+        securityContext:
+          runAsUser: 100
+        containers:
+        - name: ${NAME}-stl
+          image: ${SOURCE_IMAGE}
+          imagePullPolicy: Always
+          ports:
+          - containerPort: ${SENTINEL_PORT}
+            protocol: TCP
+            name: ${NAME}-stl
+          readinessProbe:
+            exec:
+              command:
+              - /redis-data/bin/redis-cli
+              - -a
+              - ${REDIS_PASS}
+              - -p
+              - ${SENTINEL_PORT}
+              - INFO
+            failureThreshold: 12
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          env:
+            - name: NAME
+              value: "${NAME}"
+            - name: SENTINEL
+              value: "true"
+            - name: REDIS_PASS
+              value: "${REDIS_PASS}"
+            - name: REDIS_PORT
+              value: "${REDIS_PORT}"
+            - name: SENTINEL_PORT
+              value: "${SENTINEL_PORT}"
+            - name: MY_MEM_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  containerName: ${NAME}-stl
+                  resource: limits.memory
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          resources:
+            limits:
+              cpu: ${S_RESOURCE_CPU_LIMIT}
+              memory: ${S_RESOURCE_MEMORY_LIMIT}
+            requests:
+              cpu: ${S_RESOURCE_CPU_REQ}
+              memory: ${S_RESOURCE_MEMORY_REQ}
+parameters:
+- description: 组件拉起时使用的名称
+  name: NAME
+  required: true
+  value: redis
+- description: 服务版本
+  name: VERSION
+  required: true
+  value: 5.0.5
+- description: 镜像名称
+  name: SOURCE_IMAGE
+  required: true
+  value: registry.test.com/rst:v1
+- description: 服务部署的区域
+  name: ZONE
+  required: true
+- description: redis日志数据持久化目录容量
+  name: VOLUME_REDIS_CAPACITY
+  required: true
+  value: 20Gi
+- description: redis认证密码
+  name: REDIS_PASS
+  required: true
+- description: redis提供服务的实例数
+  name: REDIS_REPLICAS
+  required: true
+  value: "3"
+- description: redis的端口号
+  name: REDIS_PORT
+  required: true
+  value: "6379"
+- description: redis提供服务的实例数
+  name: REDIS_SETNINEL_REPLICAS
+  required: true
+  value: "3"
+- description: redis-sentinel的端口号
+  name: SENTINEL_PORT
+  required: true
+  value: "26379"
+- description: redis单个实例初始内存配额
+  name: R_RESOURCE_MEMORY_REQ
+  value: 4Gi
+- description: redis单个实例最大内存配额
+  name: R_RESOURCE_MEMORY_LIMIT
+  value: 4Gi
+- description: redis单个实例初始CPU配额
+  name: R_RESOURCE_CPU_REQ
+  value: "4"
+- description: redis单个实例最大CPU配额
+  name: R_RESOURCE_CPU_LIMIT
+  value: "4"
+- description: redis-sentinel单个实例初始内存配额
+  name: S_RESOURCE_MEMORY_REQ
+  value: 1Gi
+- description: redis-sentinel单个实例最大内存配额
+  name: S_RESOURCE_MEMORY_LIMIT
+  value: 1Gi
+- description: redis-sentinel单个实例初始CPU配额
+  name: S_RESOURCE_CPU_REQ
+  value: "1"
+- description: redis-sentinel单个实例最大CPU配额
+  name: S_RESOURCE_CPU_LIMIT
+  value: "1"
