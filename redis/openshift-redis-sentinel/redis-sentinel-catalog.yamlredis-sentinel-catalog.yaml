@@ -86,7 +86,7 @@ objects:
           livenessProbe:
             exec:
               command:
-              - /usr/bin/redis-cli
+              - /redis-data/bin/redis-cli
               - -a
               - ${REDIS_PASS}
               - -p
@@ -177,7 +177,7 @@ objects:
           livenessProbe:
             exec:
               command:
-              - /usr/bin/redis-cli
+              - /redis-data/bin/redis-cli
               - -a
               - ${REDIS_PASS}
               - -p
