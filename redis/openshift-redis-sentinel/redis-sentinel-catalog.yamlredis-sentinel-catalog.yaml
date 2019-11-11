@@ -83,6 +83,16 @@ objects:
             failureThreshold: 12
             initialDelaySeconds: 10
             periodSeconds: 10
+            livenessProbe:
+              exec:
+                command:
+                - /usr/bin/redis-cli
+                - -p
+                - ${REDIS_PORT}
+                - ping
+              failureThreshold: 5
+              initialDelaySeconds: 30
+              periodSeconds: 15
           env:
           - name: NAME
             value: "${NAME}"
@@ -160,6 +170,16 @@ objects:
             failureThreshold: 12
             initialDelaySeconds: 10
             periodSeconds: 10
+          livenessProbe:
+            exec:
+              command:
+              - /usr/bin/redis-cli
+              - -p
+              - ${SENTINEL_PORT}
+              - ping
+            failureThreshold: 5
+            initialDelaySeconds: 30
+            periodSeconds: 15
           env:
             - name: NAME
               value: "${NAME}"
