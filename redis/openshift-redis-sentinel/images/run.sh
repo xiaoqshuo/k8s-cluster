@@ -37,7 +37,7 @@ function launchredis() {
           echo $MAXMEMORY
           sed -i "s/%max-memory%/${MAXMEMORY}/" /redis-data/conf/redis.conf
           touch /redis-data/data/redis.log
-          nohup /redis-data/bin/redis-server /redis-data/conf/redis.conf --protected-mode no & &&\
+          /redis-data/bin/redis-server /redis-data/conf/redis.conf --protected-mode no
           tail -f /redis-data/data/redis.log
           exit 1
       fi
@@ -57,7 +57,7 @@ function launchredis() {
   sed -i "s/%max-memory%/${MAXMEMORY}/" /redis-data/conf/redis.conf
   echo -e "slaveof ${master} ${REDIS_PORT}\nslave-read-only yes" >>/redis-data/conf/redis.conf
   touch /redis-data/data/redis.log
-  nohup /redis-data/bin/redis-server /redis-data/conf/redis.conf --protected-mode no & &&\
+  /redis-data/bin/redis-server /redis-data/conf/redis.conf --protected-mode no
   tail -f /redis-data/data/redis.log
 }
 
@@ -92,7 +92,7 @@ function launchsentinel() {
   echo "protected-mode no" >> ${sentinel_conf}
   echo 'logfile "/redis-data/data/redis.log"' >> ${sentinel_conf}
   touch /redis-data/data/redis.log
-  nohup /redis-data/bin/redis-sentinel ${sentinel_conf} --protected-mode no & &&\
+  /redis-data/bin/redis-sentinel ${sentinel_conf} --protected-mode no
   tail -f /redis-data/data/redis.log
 }
 
