@@ -90,6 +90,7 @@ function launchsentinel() {
   echo "port ${SENTINEL_PORT}" >> ${sentinel_conf}
   echo "bind 0.0.0.0" >> ${sentinel_conf}
   echo "protected-mode no" >> ${sentinel_conf}
+  echo "daemonize yes" >> ${sentinel_conf}
   echo 'logfile "/redis-data/data/redis.log"' >> ${sentinel_conf}
   touch /redis-data/data/redis.log
   /redis-data/bin/redis-sentinel ${sentinel_conf} --protected-mode no
