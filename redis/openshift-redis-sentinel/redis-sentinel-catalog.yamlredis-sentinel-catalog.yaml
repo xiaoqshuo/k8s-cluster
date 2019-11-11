@@ -189,6 +189,8 @@ objects:
           env:
             - name: NAME
               value: "${NAME}"
+            - name: REDIS_REPLICAS
+              value: "${REDIS_REPLICAS}"
             - name: REDIS_SETNINEL_REPLICAS
               value: "${REDIS_SETNINEL_REPLICAS}"
             - name: SENTINEL
